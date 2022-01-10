@@ -1,7 +1,7 @@
 hr10-monitor
 ============
 
-Arduino sketch to monitor the **Polar&reg; HR10 heart rate sensor** with an **Arduino MKR Wifi 1010** board on an **Arduino MKR RGB** LED matrix shield of size 12x7 LEDs.
+Arduino sketch to monitor the **Polar&reg; HR10 heart rate sensor** with an **Arduino MKR wifi 1010** board on an **Arduino MKR RGB** LED matrix shield of size 12x7 LEDs.
 
 ![Ardurino MKR Wifi 1010 with MKR RGB shield](illustration.png?raw=true)
 
@@ -23,15 +23,17 @@ The matrix display shows the heart rate in beats per minute (bpm) as small 3x5 n
 5  .  .  .  N  .  N  N  N  .  N  N  N
 6  .  .  .  .  .  .  .  .  .  .  .  .
 7  .  G  G  G  G  G  G  G  G  G  G  G
-
 ```
 
 References
 ----------
-
-- Official SDK for Polar&reg; Sensors for Android and iOS.
+- Arduino MKR WiFi 1010<br/>
+https://docs.arduino.cc/hardware/mkr-wifi-1010
+- Arduino MKR RGB Shield<br/>
+https://store.arduino.cc/products/arduino-mkr-rgb-shield
+- Official SDK for Polar&reg; Sensors for Android and iOS<br/>
 https://github.com/polarofficial/polar-ble-sdk
-- BLE on Arduino with Polar&reg;. Straight forward Arduino code to receive data from a Polar&reg; HR10 sensor.
+- BLE on Arduino with Polar&reg;. Straight forward Arduino code to receive data from a Polar&reg; HR10 sensor.<br/>
 https://github.com/SensorsIot/Bluetooth-BLE-on-Arduino-IDE
-- Swift code for decoding the Polar&reg; HR7 sensor data.
+- Swift code for decoding the Polar&reg; HR7 sensor data.<br/>
 https://github.com/Fle.oft/Polar-H7-HRM

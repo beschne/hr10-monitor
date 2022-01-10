@@ -63,7 +63,6 @@ void DisplayClass::refreshHeartRateDot(unsigned int heartRate) {
   if (heartRate != 0) {
     // calculate period in milliseconds
     unsigned long period = (unsigned long)heartRate << 3;
-    Serial.println("Period: " + String(period));
     unsigned long now = millis();
     if (now - lastUpdate > period) {
       MATRIX.beginDraw();

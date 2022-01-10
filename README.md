@@ -3,6 +3,8 @@ hr10-monitor
 
 Arduino sketch to monitor the **Polar&reg; HR10 heart rate sensor** with an **Arduino MKR Wifi 1010** board on an **Arduino MKR RGB** LED matrix shield of size 12x7 LEDs.
 
+![Ardurino MKR Wifi 1010 with MKR RGB shield](illustration.png?raw=true)
+
 This is a multi source file Arduino sketch. It allows to decouple not related functions into separate files and thus re-using the code in other projects as well.
 
 The monitoring code in `polar_hr10_monitor.cpp` implements a finite-state machine (**FSM**) pattern. This allows a precisely defined behaviour based on distinct states. The code becomes robust while staying clearly arranged while doing multiple tasks like communicating with the sensor and blinking concurrently.

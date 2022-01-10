@@ -1,5 +1,7 @@
 /*
  * Color ranges class declaration.
+ *
+ * (c) 2022 Benno Schneider, projects@bschneider.org
  */
 
 #ifndef _color_ranges_h
@@ -11,19 +13,19 @@ class ColorRangesClass {
   public:
     ColorRangesClass();
     virtual ~ColorRangesClass();
-    
-    int           addRange(int lowerLimit, unsigned long color); 
+
+    int           addRange(int lowerLimit, unsigned long color);
     int           setMaximum(int);
     unsigned long getColor(int v);
     int           normalize(int v, int scale);
-  
+
   private:
     struct Range {
       int lowerLimit;
       int upperLimit;
-      unsigned long color; 
+      unsigned long color;
     };
-    
+
     Range* getRange(int value);
 
     // fixed space for all ranges, no dynamic allocation

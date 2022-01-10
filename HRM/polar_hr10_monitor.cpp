@@ -1,6 +1,8 @@
 /*
  *  Polar HR10 Monitor class implementation.
  *
+ * (c) 2022 Benno Schneider, projects@bschneider.org
+ *
  *  https://www.arduino.cc/en/Reference/ArduinoBLE
  */
 
@@ -130,7 +132,7 @@ void PolarHR10MonitorClass::taskSubscribed() {
     if (_hrmCharacteristic.valueUpdated()) {
       // Serial.println("HRM value has been updated");
       decodeHRMData(_hrmCharacteristic.value(), _hrmCharacteristic.valueLength());
-    } 
+    }
   } else {
     Serial.println("Sensor not connected!");
     state = Idle;
@@ -139,8 +141,7 @@ void PolarHR10MonitorClass::taskSubscribed() {
 
 /*
  * Decode heart rate measurement.
- * 
- * Code taken from https://github.com/FleXoft/Polar-H7-HRM
+ *
  * https://github.com/FleXoft/Polar-H7-HRM/blob/master/HRM/ViewController.swift
  */
 void PolarHR10MonitorClass::decodeHRMData(const byte *pValue, int length) {
@@ -149,7 +150,7 @@ void PolarHR10MonitorClass::decodeHRMData(const byte *pValue, int length) {
   if (length >= 2) {
     if ((pValue[0] & hrFormatMask) == 0) {
       // Serial.print("8-bit heart rate ");
-      bpm = (unsigned int)(pValue[offset]); 
+      bpm = (unsigned int)(pValue[offset]);
       offset += 1;
     } else {
       // Serial.print("16-bit heart rate ");
@@ -159,7 +160,7 @@ void PolarHR10MonitorClass::decodeHRMData(const byte *pValue, int length) {
     }
   }
   Serial.println(String(bpm));
-  BPMDISPLAY.drawBPM(bpm);  
+  BPMDISPLAY.drawBPM(bpm);
 }
 
 /*

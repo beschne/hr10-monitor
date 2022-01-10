@@ -1,6 +1,8 @@
 /*
- * Color ranges class implementation to be used with 
- * BPM ranges and assigned display colors
+ * Color ranges class implementation to be used with
+ * BPM ranges and assigned display colors.
+ *
+ * (c) 2022 Benno Schneider, projects@bschneider.org
  */
 #include <Arduino.h> // needed for Serial
 
@@ -17,13 +19,13 @@ ColorRangesClass::ColorRangesClass() {}
 ColorRangesClass::~ColorRangesClass() {}
 
 /*
- * add range with color 
+ * add range with color
  */
 int ColorRangesClass::addRange(int lowerLimit, unsigned long color) {
   // add new range to array of ranges
   if (_rangesCount >= MAXRANGES) {
     Serial.println("No space left in color ranges array!");
-    return 0; 
+    return 0;
   }
   _ranges[_rangesCount].lowerLimit = lowerLimit;
   _ranges[_rangesCount].color      = color;
@@ -38,7 +40,7 @@ int ColorRangesClass::addRange(int lowerLimit, unsigned long color) {
       int min = i; for (int j = i + 1; j < _rangesCount; j++) {
         if (_ranges[j].lowerLimit < _ranges[min].lowerLimit) {
           min = j;
-          Range temp = _ranges[i]; _ranges[i] = _ranges[min]; _ranges[min] = temp; 
+          Range temp = _ranges[i]; _ranges[i] = _ranges[min]; _ranges[min] = temp;
         }
       }
     }
@@ -53,7 +55,7 @@ int ColorRangesClass::addRange(int lowerLimit, unsigned long color) {
 
 /*
  * set mximum value
- * 
+ *
  * we store thsi and add it to the last range evry time a range is added
  */
 int ColorRangesClass::setMaximum(int v) {

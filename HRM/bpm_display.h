@@ -1,5 +1,7 @@
 /*
- * BPM display class declaration
+ * BPM display class declaration.
+ *
+ * (c) 2022 Benno Schneider, projects@bschneider.org
  */
 
 #ifndef _bpm_display_h

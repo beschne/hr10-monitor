@@ -1,10 +1,12 @@
 /*
- * Just some RGB codes to be used with matrx display
+ * Just some RGB codes to be used with matrx display.
+ *
+ * (c) 2022 Benno Schneider, projects@bschneider.org
  */
 
 #ifndef _rgb_codes_h
 #define _rgb_codes_h
- 
+
 const unsigned long colBlack   = 0x000000L;
 const unsigned long colWhite   = 0xffffffL;
 const unsigned long colRed     = 0xff0000L;
@@ -21,5 +23,5 @@ const unsigned long colGreen   = 0x008000L;
 const unsigned long colPurple  = 0x800080L;
 const unsigned long colTeal    = 0x008080L;
 const unsigned long colNavy    = 0x000080L;
-	
+
 #endif // _rgb_codes_h

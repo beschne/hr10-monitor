@@ -1,5 +1,7 @@
 /*
- * Polar HR10 Monitor class declaration
+ * Polar HR10 Monitor class declaration.
+ *
+ * (c) 2022 Benno Schneider, projects@bschneider.org
  */
 
 #ifndef _polar_hr10_monitor_h
@@ -16,7 +18,7 @@ class PolarHR10MonitorClass {
     void task();
 
     bool statusChanged();
-    
+
   private:
     enum state_t { Idle, Scanning, Subscribed };
     state_t state = Idle;
@@ -28,7 +30,7 @@ class PolarHR10MonitorClass {
     BLEDevice         _hrSensor;          // heart rate sensor
     BLECharacteristic _hrmCharacteristic; // heart rate measurement
 
-    unsigned int _bpm; 
+    unsigned int _bpm;
 
 }; // PolarHR10MonitorClass
 

@@ -1,8 +1,8 @@
 /*
- * Display BPM rate on Arduino MKR RGB display
+ * Display BPM rate on Arduino MKR RGB display.
  */
 
-#include <ArduinoGraphics.h> 
+#include <ArduinoGraphics.h>
 #include <Arduino_MKRRGB.h>
 
 #include "bpm_display.h"
@@ -16,7 +16,7 @@ int BPMDisplayClass::begin() {
 }
 
 /*
- * draw bpm numbers 
+ * draw bpm numbers
  */
 void BPMDisplayClass::drawBPM(int bpm) {
   // clear the screen
@@ -31,7 +31,7 @@ void BPMDisplayClass::drawBPM(int bpm) {
   MATRIX.print(String(bpm));
   MATRIX.endText();
   // draw the bar graph
-  int xMarker = COLORRANGES.normalize(bpm, 11); 
+  int xMarker = COLORRANGES.normalize(bpm, 11);
   //MATRIX.beginDraw();
   MATRIX.stroke(color);
   MATRIX.line(1, 6, 11, 6);
@@ -42,6 +42,6 @@ void BPMDisplayClass::drawBPM(int bpm) {
 }
 
 /*
-   the one and only BPMDisplayClass instance
-*/
+ * the one and only BPMDisplayClass instance
+ */
 BPMDisplayClass BPMDISPLAY;

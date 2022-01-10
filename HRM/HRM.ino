@@ -3,13 +3,14 @@
  *
  * (c) 2022 Benno Schneider, projects@bschneider.org
  *
- * This sketch for Arduino MKR WiFi 1010 monitors a Polar Heart Rate Sensor H10
+ * This sketch for Arduino MKR WiFi 1010 monitors 
+ * a Polar(R) Heart Rate Sensor H10
  * using Bluetooth Low Energy (BLE).
  */
 
 #include "color_ranges.h"
 #include "rgb_codes.h"
-#include "bpm_display.h"
+#include "display.h"
 #include "polar_hr10_monitor.h"
 
 void setup() {
@@ -26,7 +27,7 @@ void setup() {
   COLORRANGES.setMaximum(180);          // maximum value to monitor
 
   // Intialize RGB display
-  BPMDISPLAY.begin();
+  DISP.begin();
 
   // initialize Polar HR10 monitor
   if (!HR10.begin()) {
@@ -36,6 +37,14 @@ void setup() {
 }
 
 void loop() {
+  static unsigned int currentHeartRate = (unsigned int)-1;
   // communicate with Polar HR10 heart rate monitor
   HR10.task();
+  // get heart rate and display if changed
+  unsigned int newHeartRate = HR10.getHeartRate();
+  if (newHeartRate != currentHeartRate) {
+    currentHeartRate = newHeartRate;
+    Serial.println(String(currentHeartRate)); // serial output only when changed
+    DISP.displayHeartRate(currentHeartRate);
+  }
 }

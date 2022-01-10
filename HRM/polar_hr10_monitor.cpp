@@ -7,7 +7,6 @@
  */
 
 #include "polar_hr10_monitor.h"
-#include "bpm_display.h"
 
 static const char* bleHRServiceeUuid    = "180d"; // heart rate service
 static const char* bleHRMeasurementUuid = "2a37"; // heart rate measurement characteristic
@@ -20,7 +19,8 @@ static const byte rrIntervalMask     = 0x10;
  *  Constructor
  */
 PolarHR10MonitorClass::PolarHR10MonitorClass() {
-  state = Idle;
+  _state = Idle;
+  _bpm = 0;
 }
 
 /*
@@ -43,7 +43,7 @@ int PolarHR10MonitorClass::begin() {
 */
 void PolarHR10MonitorClass::end() {
   BLE.end();
-  state = Idle;
+  _state = Idle;
   return;
 }
 
@@ -51,7 +51,7 @@ void PolarHR10MonitorClass::end() {
  * Task called from loop(). This is a finite state machine
  */
 void PolarHR10MonitorClass::task() {
-  switch (state) {
+  switch (_state) {
     case Idle:
       taskIdle();
       break;
@@ -74,7 +74,7 @@ void PolarHR10MonitorClass::taskIdle() {
   // start scanning for heart rate sensor
   // Serial.println("Scanning for heart rate sensor");
   BLE.scanForUuid(bleHRServiceeUuid);
-  state = Scanning;
+  _state = Scanning;
 }
 
 /*
@@ -86,7 +86,7 @@ void PolarHR10MonitorClass::taskScanning() {
     Serial.println(_hrSensor.localName() + " found");
     // TODO: check if this is a Polar HR10 sensor
     BLE.stopScan();
-    state = Idle; // we need to re-start scanning in case something goes wrong
+    _state = Idle; // we need to re-start scanning in case something goes wrong
     // connect to sensor
     if (!_hrSensor.connect()) {
       Serial.println("Failed to connect!");
@@ -117,7 +117,7 @@ void PolarHR10MonitorClass::taskScanning() {
       return;
     } else {
       Serial.println("Subscribed");
-      state = Subscribed;
+      _state = Subscribed;
     }
   } else {
     // Serial.println("Sensor not (yet) available");
@@ -135,7 +135,7 @@ void PolarHR10MonitorClass::taskSubscribed() {
     }
   } else {
     Serial.println("Sensor not connected!");
-    state = Idle;
+    _state = Idle;
   }
 }
 
@@ -145,22 +145,33 @@ void PolarHR10MonitorClass::taskSubscribed() {
  * https://github.com/FleXoft/Polar-H7-HRM/blob/master/HRM/ViewController.swift
  */
 void PolarHR10MonitorClass::decodeHRMData(const byte *pValue, int length) {
-  unsigned int  bpm;
   int offset = 1;
   if (length >= 2) {
     if ((pValue[0] & hrFormatMask) == 0) {
       // Serial.print("8-bit heart rate ");
-      bpm = (unsigned int)(pValue[offset]);
+      _bpm = (unsigned int)(pValue[offset]);
       offset += 1;
     } else {
       // Serial.print("16-bit heart rate ");
-      bpm = (unsigned int)pValue[offset+1] << 8;
-      bpm |= (unsigned int)pValue[offset];
+      _bpm = (unsigned int)pValue[offset+1] << 8;
+      _bpm |= (unsigned int)pValue[offset];
       offset += 2;
     }
   }
-  Serial.println(String(bpm));
-  BPMDISPLAY.drawBPM(bpm);
+  // Serial.println(String(_bpm)); // uncomment if you want to monitor heart rate
+}
+
+/*
+ * Get heart rate.
+ * 
+ * Returns 0 if not connected.
+ */
+unsigned int PolarHR10MonitorClass::getHeartRate()
+{
+  if (_state == Subscribed) {
+    return _bpm;
+  }
+  return 0; 
 }
 
 /*

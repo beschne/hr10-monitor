@@ -16,12 +16,11 @@ class PolarHR10MonitorClass {
     int begin();
     void end();
     void task();
-
-    bool statusChanged();
+    unsigned int getHeartRate();
 
   private:
     enum state_t { Idle, Scanning, Subscribed };
-    state_t state = Idle;
+    state_t _state = Idle;
     void taskIdle();
     void taskScanning();
     void taskSubscribed();

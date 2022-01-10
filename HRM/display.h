@@ -10,8 +10,9 @@
 class DisplayClass {
   public:
     int begin();
-    void displayHeartRate(unsigned int bpm);
-};
+    void displayHeartRate(unsigned int heartRate);
+    void refreshHeartRateDot(unsigned int heartRate);
+ };
 
 extern DisplayClass DISP;
 

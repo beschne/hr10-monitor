@@ -47,4 +47,6 @@ void loop() {
     Serial.println(String(currentHeartRate)); // serial output only when changed
     DISP.displayHeartRate(currentHeartRate);
   }
+  // refresh heart rate dot
+  DISP.refreshHeartRateDot(currentHeartRate);
 }

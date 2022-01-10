@@ -1,9 +1,9 @@
 /*
- * Display BPM rate on Arduino MKR RGB display.
- * 
- * https://www.arduino.cc/reference/en/libraries/arduino_mkrrgb/
- * https://www.arduino.cc/en/Reference/ArduinoGraphics
- */
+   Display BPM rate on Arduino MKR RGB display.
+
+   https://www.arduino.cc/reference/en/libraries/arduino_mkrrgb/
+   https://www.arduino.cc/en/Reference/ArduinoGraphics
+*/
 
 #include <ArduinoGraphics.h>
 #include <Arduino_MKRRGB.h>
@@ -20,15 +20,15 @@ int DisplayClass::begin() {
 }
 
 /*
- * Display heart rate number and bar graph.
- */
+   Display heart rate number and bar graph.
+*/
 void DisplayClass::displayHeartRate(unsigned int heartRate) {
   MATRIX.beginDraw();
   // clear the region used for the numbers and the bar graph
   MATRIX.fill(colBlack);
   MATRIX.stroke(colBlack);
   MATRIX.rect(1, 0, 11, 5);
-  MATRIX.stroke(colBlack); 
+  MATRIX.stroke(colBlack);
   MATRIX.line(1, 6, 11, 6);
   if (heartRate > 0) {
     // draw the numbers
@@ -48,13 +48,44 @@ void DisplayClass::displayHeartRate(unsigned int heartRate) {
     // draw 2 lines to mark zero heart rate
     MATRIX.stroke(colGray);
     MATRIX.line(5, 2,  7, 2);
-    MATRIX.line(9, 2, 11, 2);    
+    MATRIX.line(9, 2, 11, 2);
   }
   MATRIX.endDraw();
   return;
 }
 
 /*
- * the one and only BPMDisplayClass instance
- */
+   Refresh heart rate dot.
+*/
+void DisplayClass::refreshHeartRateDot(unsigned int heartRate) {
+  static unsigned long lastUpdate = 0;
+  static boolean ledOn = false;
+  if (heartRate != 0) {
+    // calculate period in milliseconds
+    unsigned long period = (unsigned long)heartRate << 3;
+    Serial.println("Period: " + String(period));
+    unsigned long now = millis();
+    if (now - lastUpdate > period) {
+      MATRIX.beginDraw();
+      MATRIX.stroke(ledOn ? colBlack : colWhite); 
+      MATRIX.point(0, 0);
+      MATRIX.endDraw();
+      lastUpdate = now;
+      ledOn = ledOn ? false : true;
+    } else {
+      // clear heart rate dot
+      if (ledOn) {
+        MATRIX.beginDraw();
+        MATRIX.stroke(colBlack); 
+        MATRIX.point(0, 0);
+        MATRIX.endDraw();
+        ledOn = false;
+      }
+    }
+  }
+}
+
+/*
+   The one and only BPMDisplayClass instance
+*/
 DisplayClass DISP; // we cannot name it DISPLAY!

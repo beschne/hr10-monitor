@@ -14,9 +14,11 @@ Display
 
 The matrix display shows the heart rate in beats per minute (bpm) as small 3x5 numbers (**N**) and as a bar graph (**G**). Numbers and bars are coloured according to the bpm ranges defined in `color_ranges.cpp`. Within the bar a single white dot shows the rate within the given bpm rate to estimate when to leave the range.
 
+The (**P**) LED in the upper left corner pulses in the speed of the received heart rate.
+
 ```
    1  2  3  4  5  6  7  8  9  10 11 12
-1  .  .  .  N  .  N  N  N  .  N  N  N
+1  P  .  .  N  .  N  N  N  .  N  N  N
 2  .  .  .  N  .  N  .  N  .  N  .  N
 3  .  .  .  N  .  N  N  N  .  N  N  N
 4  .  .  .  N  .  N  .  N  .  N  .  N
